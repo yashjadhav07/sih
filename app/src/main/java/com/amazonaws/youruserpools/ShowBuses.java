@@ -15,6 +15,8 @@ import com.amazonaws.youruserpools.CognitoYourUserPoolsDemo.R;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 
 public class ShowBuses extends AppCompatActivity implements BusListAdapter.OnBusListener {
@@ -38,11 +40,9 @@ public class ShowBuses extends AppCompatActivity implements BusListAdapter.OnBus
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_buses);
         mRecyclerView = findViewById(R.id.recyclerView);
+
         initRecyclerView();
-       insertFakeBuses();
-
-
-
+        insertFakeBuses();
 
     }
 
@@ -56,13 +56,16 @@ public class ShowBuses extends AppCompatActivity implements BusListAdapter.OnBus
             bus.setFare(""+i * 10+"");
 
             mBuses.add(bus);
+            Log.i(TAG, "insertBuses5.0: "+ mBuses);
         }*/
         //mBuses.clear();
+         ArrayList<BusList> Buses  = getIntent().getParcelableArrayListExtra("busList");
+        for (BusList bus : Buses) {
+            System.out.println(bus);
+            mBuses.add(bus);
+        }
 
-        BusList busDetails = getIntent().getParcelableExtra("busList");
-        Log.i(TAG, "insertBuses1: "+ busDetails.toString());
-        mBuses.add(busDetails);
-        Log.i(TAG, "insertBuses2: "+ busDetails.getBus());
+        Log.i(TAG, "insertBuses5: "+ mBuses);
         mBusRecyclerAdapter.notifyDataSetChanged();
 
     }
